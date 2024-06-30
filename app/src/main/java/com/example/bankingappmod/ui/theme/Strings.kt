@@ -11,3 +11,6 @@ const val TrNumber = "Transaction number"
 const val TrStatus = "Transaction status"
 const val Amount = "Amount"
 const val Date = "Date"
+
+const val accountScreen = "account_screen"
+const val addTransactionScreen = "add_transaction_screen"

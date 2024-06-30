@@ -23,7 +23,10 @@ import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.items.AccountItem
 import com.example.bankingappmod.items.TransactionItem
 import com.example.bankingappmod.screens.AccountScreen
+import com.example.bankingappmod.screens.AddTransactionScreen
 import com.example.bankingappmod.ui.theme.BankingAppModTheme
+import com.example.bankingappmod.ui.theme.accountScreen
+import com.example.bankingappmod.ui.theme.addTransactionScreen
 import com.example.bankingappmod.utils.TransactionStatus
 import java.util.Date
 
@@ -38,12 +41,13 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ) { val navController = rememberNavController()
-                   Scaffold(
-                       content = {
-                           NavigationComponent(navController = navController)
-                       }
-                   )
+                ) {
+                    val navController = rememberNavController()
+                    Scaffold(
+                        content = {
+                            NavigationComponent(navController = navController)
+                        }
+                    )
                 }
             }
         }
@@ -51,18 +55,32 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun NavigationComponent(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = "account_screen") {
-            composable("account_screen") {
+        NavHost(navController = navController, startDestination = accountScreen) {
+            composable(accountScreen) {
                 AccountScreen(
-                    onSelectAccountClick = {  },
-                    onViewAllClick = {  },
-                    onTransactionClick = {  }
-                ) {
+                    onSelectAccountClick = {
 
-                }
+                    },
+                    onViewAllClick = {
+
+                    },
+                    onTransactionClick = {
+
+                    },
+                    onAddClick = {
+                        navController.navigate(addTransactionScreen)
+                    }
+                )
             }
+            composable(addTransactionScreen) {
+                AddTransactionScreen(
+                    onOkayClick = {
+                        navController.navigate(accountScreen)
+                    }
+                )
+            }
+
         }
     }
 
 }
-
