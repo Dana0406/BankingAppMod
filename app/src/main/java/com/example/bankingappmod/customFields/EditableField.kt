@@ -46,6 +46,7 @@ fun EditableField(
                 .weight(1f)
                 .padding(end = if (showCalendarIcon) 0.dp else 8.dp)
         )
+
         if (showCalendarIcon) {
             Image(
                 painter = painterResource(id = R.drawable.calendar),
