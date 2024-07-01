@@ -1,5 +1,7 @@
 package com.example.bankingappmod.rcViews
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -9,6 +11,7 @@ import com.example.bankingappmod.items.TransactionItem
 import com.example.bankingappmod.utils.TransactionStatus
 import com.example.bankingappmod.utils.dateFormatter
 import java.util.Date
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecentTransactionsRecyclerView(onTransactionClick: () -> Unit) {
     LazyColumn(
@@ -17,7 +20,7 @@ fun RecentTransactionsRecyclerView(onTransactionClick: () -> Unit) {
         items(4) {
             TransactionItem(
                 onTransactionClick,
-                TransactionItemData("11", "11", dateFormatter(), TransactionStatus.EXECUTED, 10.02f)
+                TransactionItemData(0,"11", "11", dateFormatter(), TransactionStatus.EXECUTED, 10.02f)
             )
         }
     }

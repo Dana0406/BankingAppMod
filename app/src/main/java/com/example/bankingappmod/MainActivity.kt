@@ -28,6 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bankingappmod.data.TransactionItemData
+import com.example.bankingappmod.db.DatabaseInstance
 import com.example.bankingappmod.screens.AccountScreen
 import com.example.bankingappmod.screens.AddTransactionScreen
 import com.example.bankingappmod.screens.AllTransactionsScreen
@@ -147,6 +148,7 @@ class MainActivity : ComponentActivity() {
                             composable(transactionDetailScreen) {
                                 DetailsTransactionScreen(
                                     transactionItemData = TransactionItemData(
+                                        0,
                                         "11",
                                         "11",
                                         dateFormatter(),

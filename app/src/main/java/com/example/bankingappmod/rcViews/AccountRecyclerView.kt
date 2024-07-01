@@ -23,20 +23,24 @@ fun AccountRecyclerView(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(1) {
-            if(showForwardIcon) AccountItem(
+            if (showForwardIcon) AccountItem(
                 onSelectAccountClick,
                 AccountItemData(
-                "Saving Account",
-                "91212192291221",
-                "1234"
-            ),true)
+                    0,
+                    "Saving Account",
+                    "91212192291221",
+                    "1234"
+                ), true
+            )
             else AccountItem(
                 onSelectAccountClick,
                 AccountItemData(
-                "Saving Account",
-                "91212192291221",
-                "1234"
-            ),false)
+                    0,
+                    "Saving Account",
+                    "91212192291221",
+                    "1234"
+                ), false
+            )
         }
     }
 }
