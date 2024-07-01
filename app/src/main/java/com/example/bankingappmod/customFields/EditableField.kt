@@ -3,6 +3,7 @@ package com.example.bankingappmod.customFields
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,7 +25,8 @@ import com.example.bankingappmod.R
 fun EditableField(
     value: String,
     showCalendarIcon: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCalendarIconClick: () -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -44,13 +46,13 @@ fun EditableField(
                 .weight(1f)
                 .padding(end = if (showCalendarIcon) 0.dp else 8.dp)
         )
-
         if (showCalendarIcon) {
             Image(
                 painter = painterResource(id = R.drawable.calendar),
                 contentDescription = "Calendar Icon",
                 modifier = Modifier
                     .size(24.dp)
+                    .clickable { onCalendarIconClick() }
             )
         }
     }
