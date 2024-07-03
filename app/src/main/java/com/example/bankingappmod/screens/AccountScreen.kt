@@ -1,7 +1,8 @@
 package com.example.bankingappmod.screens
 
 
-import android.accounts.Account
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.R
+import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.rcViews.AccountRecyclerView
 import com.example.bankingappmod.rcViews.RecentTransactionsRecyclerView
 import com.example.bankingappmod.ui.theme.Account
@@ -35,13 +38,18 @@ import com.example.bankingappmod.ui.theme.Add
 import com.example.bankingappmod.ui.theme.Blue
 import com.example.bankingappmod.ui.theme.RecentTransactions
 import com.example.bankingappmod.ui.theme.ViewAll
+import com.example.bankingappmod.vm.AccountsViewModel
+import com.example.bankingappmod.vm.TransactionsViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AccountScreen(
     onSelectAccountClick: () -> Unit,
     onViewAllClick: () -> Unit,
-    onTransactionClick: () -> Unit,
-    onAddClick: () -> Unit
+    onTransactionClick: (TransactionItemData)  -> Unit,
+    onAddClick: () -> Unit,
+    transViewModel: TransactionsViewModel = hiltViewModel(),
+    accountViewModel: AccountsViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier
@@ -56,7 +64,11 @@ fun AccountScreen(
             modifier = Modifier.padding(top = 12.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        AccountRecyclerView(onSelectAccountClick)
+        AccountRecyclerView(
+            viewModel = accountViewModel,
+            onSelectAccountClick = onSelectAccountClick,
+            showForwardIcon = true
+        )
         Spacer(modifier = Modifier.height(23.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -84,7 +96,10 @@ fun AccountScreen(
                 .fillMaxWidth()
                 .background(Color.Black)
         ) {
-            RecentTransactionsRecyclerView(onTransactionClick)
+            RecentTransactionsRecyclerView(
+                viewModel = transViewModel,
+                onTransactionClick = onTransactionClick
+            )
         }
         Spacer(modifier = Modifier.weight(1f))
         Box(

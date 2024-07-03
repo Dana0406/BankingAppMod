@@ -1,5 +1,7 @@
 package com.example.bankingappmod.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,15 +26,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.R
+import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.rcViews.RecentTransactionsRecyclerView
+import com.example.bankingappmod.vm.TransactionsViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AllTransactionsScreen(
-    onTransactionClick: () -> Unit,
-    onBackClick:() ->Unit,
-    onFilterClick:() ->Unit,
+    onTransactionClick: (TransactionItemData) -> Unit,
+    onBackClick: () -> Unit,
+    onFilterClick: () -> Unit,
+    viewModel: TransactionsViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier
@@ -80,7 +87,7 @@ fun AllTransactionsScreen(
                 .background(Color.Black)
                 .fillMaxWidth()
         ) {
-            RecentTransactionsRecyclerView(onTransactionClick)
+            RecentTransactionsRecyclerView(viewModel = viewModel, onTransactionClick = onTransactionClick)
         }
     }
 }
