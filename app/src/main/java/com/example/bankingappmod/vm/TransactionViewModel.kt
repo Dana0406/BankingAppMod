@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class TransactionsViewModel @Inject constructor(
     private val transactionDao: TransactionItemDataDao
@@ -18,6 +17,10 @@ class TransactionsViewModel @Inject constructor(
 
     private val _transactions = MutableLiveData<List<TransactionItemData>>()
     val transactions: LiveData<List<TransactionItemData>> = _transactions
+
+    private val _selectedTransaction = MutableLiveData<TransactionItemData?>()
+    val selectedTransaction: LiveData<TransactionItemData?> = _selectedTransaction
+
     init {
         loadTransactions()
     }
@@ -25,6 +28,19 @@ class TransactionsViewModel @Inject constructor(
     private fun loadTransactions() {
         viewModelScope.launch {
             _transactions.value = transactionDao.getAllTransactionItemData()
+        }
+    }
+
+    fun selectTransaction(transactionId: Int) {
+        viewModelScope.launch {
+            _selectedTransaction.value = transactionDao.getTransactionItemDataById(transactionId)
+        }
+    }
+
+    fun updateTransaction(transaction: TransactionItemData) {
+        viewModelScope.launch {
+            transactionDao.update(transaction)
+            loadTransactions()
         }
     }
 

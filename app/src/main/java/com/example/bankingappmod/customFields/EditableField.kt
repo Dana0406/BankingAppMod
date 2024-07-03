@@ -24,22 +24,23 @@ import com.example.bankingappmod.R
 @Composable
 fun EditableField(
     value: String,
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false,
     showCalendarIcon: Boolean = false,
-    modifier: Modifier = Modifier,
     onCalendarIconClick: () -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = Modifier
             .background(Color.Black, shape = RoundedCornerShape(8.dp))
-            .border(1.dp, Color.White, shape = RoundedCornerShape(8.dp))
+            .border(1.dp, if (isError) Color.Red else Color.White, shape = RoundedCornerShape(8.dp))
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .height(32.dp)
             .fillMaxWidth()
     ) {
         BasicTextField(
             value = value,
-            onValueChange = {},
+            onValueChange = { newValue -> onValueChange(newValue) },
             textStyle = TextStyle(color = Color.White),
             cursorBrush = SolidColor(Color.White),
             modifier = Modifier

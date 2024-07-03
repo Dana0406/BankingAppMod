@@ -14,16 +14,18 @@ import com.example.bankingappmod.utils.TransactionStatus
 import com.example.bankingappmod.utils.dateFormatter
 import com.example.bankingappmod.vm.TransactionsViewModel
 import java.util.Date
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun RecentTransactionsRecyclerView(viewModel: TransactionsViewModel, onTransactionClick: (TransactionItemData) -> Unit) {
-    val transactions = viewModel.transactions.observeAsState(initial = emptyList())
-
+fun RecentTransactionsRecyclerView(
+    onTransactionClick: (Int) -> Unit,
+    transactions: List<TransactionItemData>
+) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
     ) {
-        items(transactions.value) { transaction ->
+        items(transactions) { transaction ->
             TransactionItem(
-                onTransDetailClick = { onTransactionClick(transaction) },
+                onTransDetailClick = { onTransactionClick(transaction.id) },
                 transactionItem = transaction
             )
         }

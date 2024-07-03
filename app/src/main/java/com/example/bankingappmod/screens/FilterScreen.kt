@@ -71,22 +71,32 @@ fun FilterScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     RegularText(text = "Start Date")
                     Spacer(modifier = Modifier.height(8.dp))
-                    EditableField(selectedStartDate, showCalendarIcon = true, onCalendarIconClick = {
-                        isStartDate = true
-                        showCalendar = true
-                    })
+                    EditableField(
+                        value = selectedStartDate,
+                        onValueChange = { newValue -> selectedStartDate = newValue },
+                        showCalendarIcon = true,
+                        onCalendarIconClick = {
+                            isStartDate = true
+                            showCalendar = true
+                        }
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     RegularText(text = "End Date")
                     Spacer(modifier = Modifier.height(8.dp))
-                    EditableField(selectedEndDate, showCalendarIcon = true, onCalendarIconClick = {
-                        isStartDate = false
-                        showCalendar = true
-                    })
+                    EditableField(
+                        value = selectedEndDate,
+                        onValueChange = { newValue -> selectedEndDate = newValue },
+                        showCalendarIcon = true,
+                        onCalendarIconClick = {
+                            isStartDate = false
+                            showCalendar = true
+                        }
+                    )
                     Spacer(modifier = Modifier.height(24.dp))
                     CustomButton(
-                        "Submit",
-                        onSubmitClick,
-                        Modifier.align(Alignment.CenterHorizontally)
+                        text = "Submit",
+                        onOkayClick =  onSubmitClick,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }
             }

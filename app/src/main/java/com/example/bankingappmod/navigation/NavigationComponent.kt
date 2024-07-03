@@ -19,8 +19,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.screens.AccountScreen
 import com.example.bankingappmod.screens.AddTransactionScreen
@@ -43,8 +45,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavigationComponent(navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
-    val bottomSheetState =
-        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     var shouldShowSelectAccountSheet by remember { mutableStateOf(false) }
     var shouldShowFilterScreen by remember { mutableStateOf(false) }
 
@@ -91,8 +92,8 @@ fun NavigationComponent(navController: NavHostController) {
                                 onViewAllClick = {
                                     navController.navigate(allTransactionsScreen)
                                 },
-                                onTransactionClick = {
-                                    navController.navigate(transactionDetailScreen)
+                                onTransactionClick = { transactionId ->
+                                    navController.navigate("$transactionDetailScreen/$transactionId")
                                 },
                                 onAddClick = {
                                     navController.navigate(addTransactionScreen)
@@ -107,11 +108,9 @@ fun NavigationComponent(navController: NavHostController) {
                             )
                         }
                         composable(allTransactionsScreen) {
-                            val viewModel: TransactionsViewModel = hiltViewModel()
                             AllTransactionsScreen(
-                                viewModel = viewModel,
-                                onTransactionClick = { transaction ->
-
+                                onTransactionClick = { transactionId ->
+                                    navController.navigate("$transactionDetailScreen/$transactionId")
                                 },
                                 onBackClick = {
                                     navController.navigate(accountScreen)
@@ -121,16 +120,13 @@ fun NavigationComponent(navController: NavHostController) {
                                 }
                             )
                         }
-                        composable(transactionDetailScreen) {
+                        composable(
+                            route = "$transactionDetailScreen/{transactionId}",
+                            arguments = listOf(navArgument("transactionId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val transactionId = backStackEntry.arguments?.getInt("transactionId") ?: 0
                             DetailsTransactionScreen(
-                                transactionItemData = TransactionItemData(
-                                    0,
-                                    "11",
-                                    "11",
-                                    dateFormatter(),
-                                    TransactionStatus.EXECUTED,
-                                    10.02f
-                                ),
+                                transactionId = transactionId,
                                 onOkayClick = {
                                     navController.navigate(accountScreen)
                                 }
