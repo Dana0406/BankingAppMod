@@ -45,7 +45,6 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
-    @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,9 +101,6 @@ class MainActivity : ComponentActivity() {
                             FilterScreen(
                                 onSubmitClick = {
                                     shouldShowFilterScreen = false
-                                },
-                                onCalendarIconClick = {
-
                                 }
                             )
                         }
