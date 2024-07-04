@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +32,7 @@ import com.example.bankingappmod.ui.theme.TrNumber
 import com.example.bankingappmod.ui.theme.TrStatus
 import com.example.bankingappmod.ui.theme.Transaction
 import com.example.bankingappmod.utils.TransactionStatus
+import com.example.bankingappmod.utils.dateFormatter
 import com.example.bankingappmod.vm.TransactionsViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -44,6 +46,14 @@ fun AddTransactionScreen(
     var transactionStatus by remember { mutableStateOf("") }
     var transactionAmount by remember { mutableStateOf("") }
     var amountError by remember { mutableStateOf(false) }
+
+    val isFormValid by derivedStateOf {
+        transactionPlace.isNotBlank() &&
+                transactionNumber.isNotBlank() &&
+                transactionStatus.isNotBlank() &&
+                transactionAmount.isNotBlank() &&
+                !amountError
+    }
 
     Column(
         modifier = Modifier
@@ -93,19 +103,22 @@ fun AddTransactionScreen(
             isError = amountError
         )
         Spacer(modifier = Modifier.height(32.dp))
-        CustomButton(onOkayClick = {
-            if (!amountError) {
-                val newTransaction = TransactionItemData(
-                    id = 0,
-                    transactionPlace = transactionPlace,
-                    transactionNumber = transactionNumber,
-                    transactionDate = "25.07.2024",
-                    transactionStatus = TransactionStatus.valueOf(transactionStatus),
-                    transactionAmount = transactionAmount.toFloat()
-                )
-                viewModel.addTransaction(newTransaction)
-                onOkayClick()
-            }
-        }, text = Okay)
+        CustomButton(
+            onOkayClick = {
+                if (isFormValid) {
+                    val newTransaction = TransactionItemData(
+                        id = 0,
+                        transactionPlace = transactionPlace,
+                        transactionNumber = transactionNumber,
+                        transactionDate = dateFormatter(),
+                        transactionStatus = TransactionStatus.valueOf(transactionStatus),
+                        transactionAmount = transactionAmount.toFloat()
+                    )
+                    viewModel.addTransaction(newTransaction)
+                    onOkayClick()
+                }
+            },
+            text = Okay
+        )
     }
 }

@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.R
 import com.example.bankingappmod.data.TransactionItemData
+import com.example.bankingappmod.items.AccountItem
 import com.example.bankingappmod.rcViews.AccountRecyclerView
 import com.example.bankingappmod.rcViews.RecentTransactionsRecyclerView
 import com.example.bankingappmod.ui.theme.Account
@@ -54,6 +55,7 @@ fun AccountScreen(
     accountViewModel: AccountsViewModel = hiltViewModel()
 ) {
     val transactions by transViewModel.transactions.observeAsState(emptyList())
+    val selectedAccount by accountViewModel.selectedAccount.observeAsState()
 
     Column(
         modifier = Modifier
@@ -62,17 +64,20 @@ fun AccountScreen(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = Account,
+            text = "Account",
             fontSize = 28.sp,
             color = Color.White,
             modifier = Modifier.padding(top = 12.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        AccountRecyclerView(
-            viewModel = accountViewModel,
-            onSelectAccountClick = onSelectAccountClick,
-            showForwardIcon = true
-        )
+        selectedAccount?.let { account ->
+            AccountItem(
+                accountItem = account,
+                onSelectAccountClick = onSelectAccountClick,
+                showForwardIcon = true,
+                isSelected = true
+            )
+        }
         Spacer(modifier = Modifier.height(23.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -80,12 +85,12 @@ fun AccountScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = RecentTransactions,
+                text = "Recent Transactions",
                 fontSize = 28.sp,
                 color = Color.White
             )
             Text(
-                text = ViewAll,
+                text = "View All",
                 fontSize = 13.sp,
                 color = Blue,
                 modifier = Modifier
@@ -116,11 +121,10 @@ fun AccountScreen(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.plus),
-                    contentDescription = Add,
+                    contentDescription = "Add",
                     tint = Color.White
                 )
             }
         }
     }
 }
-

@@ -24,24 +24,27 @@ import androidx.compose.ui.unit.sp
 import com.example.bankingappmod.R
 import com.example.bankingappmod.data.AccountItemData
 import com.example.bankingappmod.ui.theme.BackgroundGrey
+import com.example.bankingappmod.ui.theme.Blue
 import com.example.bankingappmod.ui.theme.TextGrey
+import com.example.bankingappmod.utils.maskCardNumber
 
 @Composable
 fun AccountItem(
     onSelectAccountClick: () -> Unit,
     accountItem: AccountItemData,
-    showForwardIcon: Boolean = true
+    showForwardIcon: Boolean = true,
+    isSelected: Boolean = false
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Black)
+
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(BackgroundGrey)
+                .background(if (isSelected) Blue else BackgroundGrey)
                 .padding(16.dp),
             verticalAlignment = Alignment.Top
         ) {
@@ -66,7 +69,7 @@ fun AccountItem(
                     color = TextGrey
                 )
                 Text(
-                    text = accountItem.cardNumber,
+                    text = maskCardNumber(accountItem.cardNumber),
                     fontSize = 13.sp,
                     color = TextGrey
                 )

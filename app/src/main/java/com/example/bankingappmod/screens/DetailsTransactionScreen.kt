@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -20,13 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.text.isDigitsOnly
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.customFields.CustomButton
 import com.example.bankingappmod.customFields.DropdownMenuWithStatus
 import com.example.bankingappmod.customFields.EditableField
 import com.example.bankingappmod.customFields.RegularText
-import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.ui.theme.Amount
 import com.example.bankingappmod.ui.theme.Date
 import com.example.bankingappmod.ui.theme.Okay
@@ -35,7 +34,6 @@ import com.example.bankingappmod.ui.theme.TrNumber
 import com.example.bankingappmod.ui.theme.TrStatus
 import com.example.bankingappmod.ui.theme.Transaction
 import com.example.bankingappmod.utils.TransactionStatus
-import com.example.bankingappmod.utils.dateFormatter
 import com.example.bankingappmod.vm.TransactionsViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -68,6 +66,15 @@ fun DetailsTransactionScreen(
         }
     }
 
+    val isFormValid by derivedStateOf {
+        transactionPlace.isNotBlank() &&
+                transactionNumber.isNotBlank() &&
+                transactionDate.isNotBlank() &&
+                transactionStatus.isNotBlank() &&
+                transactionAmount.isNotBlank() &&
+                !amountError
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -75,25 +82,29 @@ fun DetailsTransactionScreen(
             .padding(24.dp)
     ) {
         Text(
-            text = "Transaction",
+            text = Transaction,
             fontSize = 28.sp,
             color = Color.White
         )
         Spacer(modifier = Modifier.height(32.dp))
         RegularText(text = TrApplied)
         Spacer(modifier = Modifier.height(8.dp))
-        EditableField(value = transactionPlace, onValueChange = { newValue -> transactionPlace = newValue })
+        EditableField(
+            value = transactionPlace,
+            onValueChange = { newValue -> transactionPlace = newValue })
         Spacer(modifier = Modifier.height(16.dp))
         RegularText(text = TrNumber)
         Spacer(modifier = Modifier.height(8.dp))
-        EditableField(value = transactionNumber, onValueChange = { newValue -> transactionNumber = newValue })
+        EditableField(
+            value = transactionNumber,
+            onValueChange = { newValue -> transactionNumber = newValue })
         Spacer(modifier = Modifier.height(16.dp))
         RegularText(text = Date)
         Spacer(modifier = Modifier.height(8.dp))
         EditableField(
             value = transactionDate,
             onValueChange = { newValue -> transactionDate = newValue },
-            showCalendarIcon = true,
+            showCalendarIcon = false,
             onCalendarIconClick = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -119,18 +130,21 @@ fun DetailsTransactionScreen(
             isError = amountError
         )
         Spacer(modifier = Modifier.height(32.dp))
-        CustomButton(onOkayClick = {
-            if (!amountError) {
-                val updatedTransaction = transactionItemData?.copy(
-                    transactionPlace = transactionPlace,
-                    transactionNumber = transactionNumber,
-                    transactionDate = transactionDate,
-                    transactionStatus = TransactionStatus.valueOf(transactionStatus),
-                    transactionAmount = transactionAmount.toFloat()
-                )
-                updatedTransaction?.let { viewModel.updateTransaction(it) }
-                onOkayClick()
-            }
-        }, text = Okay)
+        CustomButton(
+            onOkayClick = {
+                if (isFormValid) {
+                    val updatedTransaction = transactionItemData?.copy(
+                        transactionPlace = transactionPlace,
+                        transactionNumber = transactionNumber,
+                        transactionDate = transactionDate,
+                        transactionStatus = TransactionStatus.valueOf(transactionStatus),
+                        transactionAmount = transactionAmount.toFloat()
+                    )
+                    updatedTransaction?.let { viewModel.updateTransaction(it) }
+                    onOkayClick()
+                }
+            },
+            text = Okay
+        )
     }
 }

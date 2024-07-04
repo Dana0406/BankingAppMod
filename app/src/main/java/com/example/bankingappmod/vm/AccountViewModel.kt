@@ -18,14 +18,25 @@ class AccountsViewModel @Inject constructor(
     private val _accounts = MutableLiveData<List<AccountItemData>>()
     val accounts: LiveData<List<AccountItemData>> = _accounts
 
+    private val _selectedAccount = MutableLiveData<AccountItemData>()
+    val selectedAccount: LiveData<AccountItemData> = _selectedAccount
+
     init {
         loadAccounts()
     }
 
     private fun loadAccounts() {
         viewModelScope.launch {
-            _accounts.value = accountDao.getAllAccountItemData()
+            val loadedAccounts = accountDao.getAllAccountItemData()
+            _accounts.value = loadedAccounts
+            if (loadedAccounts.isNotEmpty()) {
+                _selectedAccount.value = loadedAccounts.first()
+            }
         }
+    }
+
+    fun selectAccount(account: AccountItemData) {
+        _selectedAccount.value = account
     }
 
     fun addAccount(account: AccountItemData) {

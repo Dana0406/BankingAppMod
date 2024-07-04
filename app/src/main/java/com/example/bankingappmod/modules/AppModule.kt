@@ -28,7 +28,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(app: Application): AppDatabase {
-        return Room.databaseBuilder(app, AppDatabase::class.java, "bank_database")
+        return Room.databaseBuilder(app, AppDatabase::class.java, "bank_database1")
             .addCallback(object : RoomDatabase.Callback() {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onCreate(db: SupportSQLiteDatabase) {
@@ -36,6 +36,11 @@ object AppModule {
 
                     CoroutineScope(Dispatchers.IO).launch {
                         val initialAccount = AccountItemData(
+                            accountName = "Main Account",
+                            accountNumber = "1234567890",
+                            cardNumber = "1111222233334444"
+                        )
+                        val initialAccount2 = AccountItemData(
                             accountName = "Main Account",
                             accountNumber = "1234567890",
                             cardNumber = "1111222233334444"
@@ -59,6 +64,7 @@ object AppModule {
                         )
 
                         provideDatabase(app).accountItemDataDao().insert(initialAccount)
+                        provideDatabase(app).accountItemDataDao().insert(initialAccount2)
                         provideDatabase(app).transactionItemDataDao().insert(initialTransactions[0])
                         provideDatabase(app).transactionItemDataDao().insert(initialTransactions[1])
                     }

@@ -13,7 +13,6 @@ import com.example.bankingappmod.utils.createFlexibleDateFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,13 +70,16 @@ class TransactionsViewModel @Inject constructor(
             val startDateParsed = LocalDate.parse(startDate, dateFormatter)
             val endDateParsed = LocalDate.parse(endDate, dateFormatter)
 
-            val filteredList = _transactions.value?.filter { transaction ->
+            val allTransactions = _transactions.value ?: emptyList()
+
+            val filteredList = allTransactions.filter { transaction ->
                 val transactionDate = LocalDate.parse(transaction.transactionDate, dateFormatter)
                 transactionDate in startDateParsed..endDateParsed
-            }?.sortedByDescending { LocalDate.parse(it.transactionDate, dateFormatter) }
+            }.sortedByDescending { LocalDate.parse(it.transactionDate, dateFormatter) }
 
-            Log.d("TransactionsViewModel", "Filtered list size: ${filteredList?.size}")
+            Log.e("TransactionsViewModel", "Error parsing dates: $filteredList")
             _filteredTransactions.value = filteredList
+            _transactions.value = filteredList
         } catch (e: Exception) {
             Log.e("TransactionsViewModel", "Error parsing dates: ${e.message}")
         }

@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -30,8 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.R
-import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.rcViews.RecentTransactionsRecyclerView
+import com.example.bankingappmod.ui.theme.AllTransaction
+import com.example.bankingappmod.ui.theme.Back
+import com.example.bankingappmod.ui.theme.Filter
 import com.example.bankingappmod.vm.TransactionsViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -59,7 +62,7 @@ fun AllTransactionsScreen(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.back_button),
-                contentDescription = "Back",
+                contentDescription = Back,
                 modifier = Modifier
                     .size(24.dp)
                     .padding(top = 6.dp)
@@ -67,7 +70,7 @@ fun AllTransactionsScreen(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text = "All transactions",
+                text = AllTransaction,
                 color = Color.White,
                 fontSize = 17.sp,
                 textAlign = TextAlign.Center,
@@ -76,7 +79,7 @@ fun AllTransactionsScreen(
             Spacer(modifier = Modifier.width(16.dp))
             Image(
                 painter = painterResource(id = R.drawable.filter_icon),
-                contentDescription = "Filter",
+                contentDescription = Filter,
                 modifier = Modifier
                     .size(24.dp)
                     .padding(top = 6.dp)
