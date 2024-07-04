@@ -18,13 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.rcViews.AccountRecyclerView
+import com.example.bankingappmod.vm.AccountsViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectAccountScreen(
     onSelAccountClick: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    accountViewModel: AccountsViewModel = hiltViewModel(),
 ) {
     Column(
         modifier = Modifier
@@ -46,7 +49,11 @@ fun SelectAccountScreen(
                 .background(Color.Black)
                 .fillMaxWidth()
         ) {
-            AccountRecyclerView(onSelAccountClick, false)
+            AccountRecyclerView(
+                viewModel = accountViewModel,
+                onSelectAccountClick = onSelAccountClick,
+                showForwardIcon = false
+            )
         }
     }
 }
