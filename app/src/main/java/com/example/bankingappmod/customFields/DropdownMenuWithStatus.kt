@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.bankingappmod.R
+import com.example.bankingappmod.ui.theme.DropdownIcon
 
 @Composable
 fun DropdownMenuWithStatus(
@@ -53,7 +54,7 @@ fun DropdownMenuWithStatus(
             )
             Icon(
                 painter = painterResource(id = R.drawable.plus),
-                contentDescription = "Dropdown Icon",
+                contentDescription = DropdownIcon,
                 tint = Color.White,
                 modifier = Modifier.align(Alignment.CenterEnd)
             )

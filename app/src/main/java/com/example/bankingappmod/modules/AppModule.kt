@@ -28,7 +28,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(app: Application): AppDatabase {
-        return Room.databaseBuilder(app, AppDatabase::class.java, "bank_database22")
+        return Room.databaseBuilder(app, AppDatabase::class.java, "bank_database")
             .addCallback(object : RoomDatabase.Callback() {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onCreate(db: SupportSQLiteDatabase) {
@@ -62,7 +62,6 @@ object AppModule {
                                 transactionAmount = 150.0f
                             )
                         )
-
                         provideDatabase(app).accountItemDataDao().insert(initialAccount)
                         provideDatabase(app).accountItemDataDao().insert(initialAccount2)
                         provideDatabase(app).transactionItemDataDao().insert(initialTransactions[0])

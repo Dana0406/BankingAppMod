@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.bankingappmod.R
+import com.example.bankingappmod.ui.theme.CalenderIcon
 
 @Composable
 fun EditableField(
@@ -51,7 +52,7 @@ fun EditableField(
         if (showCalendarIcon) {
             Image(
                 painter = painterResource(id = R.drawable.calendar),
-                contentDescription = "Calendar Icon",
+                contentDescription = CalenderIcon,
                 modifier = Modifier
                     .size(24.dp)
                     .clickable { onCalendarIconClick() }

@@ -77,11 +77,12 @@ class TransactionsViewModel @Inject constructor(
                 transactionDate in startDateParsed..endDateParsed
             }.sortedByDescending { LocalDate.parse(it.transactionDate, dateFormatter) }
 
-            Log.e("TransactionsViewModel", "Error parsing dates: $filteredList")
+            Log.e("TransactionsViewModel", "List: $filteredList")
+            Log.e("TransactionsViewModel", "List: ${filteredList.size}")
             _filteredTransactions.value = filteredList
-            _transactions.value = filteredList
         } catch (e: Exception) {
             Log.e("TransactionsViewModel", "Error parsing dates: ${e.message}")
         }
     }
+
 }

@@ -72,6 +72,7 @@ fun NavigationComponent(navController: NavHostController) {
                         FilterScreen(
                             onSubmitClick = {
                                 shouldShowFilterScreen = false
+                                navController.navigate(allTransactionsScreen)
                             }
                         )
                     }
@@ -112,7 +113,9 @@ fun NavigationComponent(navController: NavHostController) {
                                 },
                                 onFilterClick = {
                                     shouldShowFilterScreen = true
-                                }
+                                },
+                                startDate = "01.01.2000",
+                                endDate = "01.01.2050"
                             )
                         }
                         composable(

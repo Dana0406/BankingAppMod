@@ -43,9 +43,15 @@ fun AllTransactionsScreen(
     onTransactionClick: (Int) -> Unit,
     onBackClick: () -> Unit,
     onFilterClick: () -> Unit,
-    viewModel: TransactionsViewModel = hiltViewModel()
+    viewModel: TransactionsViewModel = hiltViewModel(),
+    startDate: String,
+    endDate: String
 ) {
     val transactions by viewModel.filteredTransactions.observeAsState(emptyList())
+
+    LaunchedEffect(Unit) {
+        viewModel.filterAndSortTransactions(startDate, endDate)
+    }
 
     Column(
         modifier = Modifier
