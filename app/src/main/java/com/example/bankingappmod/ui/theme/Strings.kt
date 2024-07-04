@@ -14,3 +14,4 @@ const val Date = "Date"
 
 const val accountScreen = "account_screen"
 const val addTransactionScreen = "add_transaction_screen"
+const val allTransactionsScreen = "all_transactions_screen"

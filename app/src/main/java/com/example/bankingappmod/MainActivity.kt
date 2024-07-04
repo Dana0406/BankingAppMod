@@ -24,9 +24,11 @@ import com.example.bankingappmod.items.AccountItem
 import com.example.bankingappmod.items.TransactionItem
 import com.example.bankingappmod.screens.AccountScreen
 import com.example.bankingappmod.screens.AddTransactionScreen
+import com.example.bankingappmod.screens.AllTransactionsScreen
 import com.example.bankingappmod.ui.theme.BankingAppModTheme
 import com.example.bankingappmod.ui.theme.accountScreen
 import com.example.bankingappmod.ui.theme.addTransactionScreen
+import com.example.bankingappmod.ui.theme.allTransactionsScreen
 import com.example.bankingappmod.utils.TransactionStatus
 import java.util.Date
 
@@ -62,7 +64,7 @@ class MainActivity : ComponentActivity() {
 
                     },
                     onViewAllClick = {
-
+                        navController.navigate(allTransactionsScreen)
                     },
                     onTransactionClick = {
 
@@ -76,6 +78,19 @@ class MainActivity : ComponentActivity() {
                 AddTransactionScreen(
                     onOkayClick = {
                         navController.navigate(accountScreen)
+                    }
+                )
+            }
+            composable(allTransactionsScreen) {
+                AllTransactionsScreen(
+                    onTransactionClick = {
+
+                    },
+                    onBackClick = {
+                        navController.navigate(accountScreen)
+                    },
+                    onFilterClick = {
+
                     }
                 )
             }
