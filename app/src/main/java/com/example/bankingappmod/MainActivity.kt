@@ -32,6 +32,7 @@ import com.example.bankingappmod.screens.AccountScreen
 import com.example.bankingappmod.screens.AddTransactionScreen
 import com.example.bankingappmod.screens.AllTransactionsScreen
 import com.example.bankingappmod.screens.DetailsTransactionScreen
+import com.example.bankingappmod.screens.FilterScreen
 import com.example.bankingappmod.screens.SelectAccountScreen
 import com.example.bankingappmod.ui.theme.BankingAppModTheme
 import com.example.bankingappmod.ui.theme.accountScreen
@@ -68,9 +69,10 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun NavigationComponent(navController: NavHostController) {
         val coroutineScope = rememberCoroutineScope()
-        val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-
+        val bottomSheetState =
+            rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
         var shouldShowSelectAccountSheet by remember { mutableStateOf(false) }
+        var shouldShowFilterScreen by remember { mutableStateOf(false) }
 
         ModalBottomSheetLayout(
             sheetState = bottomSheetState,
@@ -80,11 +82,13 @@ class MainActivity : ComponentActivity() {
                         onSelAccountClick = {
                             coroutineScope.launch {
                                 bottomSheetState.hide()
+                                shouldShowSelectAccountSheet = false
                             }
                         },
                         onDismiss = {
                             coroutineScope.launch {
                                 bottomSheetState.hide()
+                                shouldShowSelectAccountSheet = false
                             }
                         }
                     )
@@ -94,6 +98,16 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     content = {
+                        if (shouldShowFilterScreen) {
+                            FilterScreen(
+                                onSubmitClick = {
+                                    shouldShowFilterScreen = false
+                                },
+                                onCalendarIconClick = {
+
+                                }
+                            )
+                        }
                         NavHost(navController = navController, startDestination = accountScreen) {
                             composable(accountScreen) {
                                 AccountScreen(
@@ -130,13 +144,19 @@ class MainActivity : ComponentActivity() {
                                         navController.navigate(accountScreen)
                                     },
                                     onFilterClick = {
-
+                                        shouldShowFilterScreen = true
                                     }
                                 )
                             }
                             composable(transactionDetailScreen) {
                                 DetailsTransactionScreen(
-                                    transactionItemData = TransactionItemData("11", "11", dateFormatter(), TransactionStatus.EXECUTED, 10.02f),
+                                    transactionItemData = TransactionItemData(
+                                        "11",
+                                        "11",
+                                        dateFormatter(),
+                                        TransactionStatus.EXECUTED,
+                                        10.02f
+                                    ),
                                     onOkayClick = {
                                         navController.navigate(accountScreen)
                                     }
