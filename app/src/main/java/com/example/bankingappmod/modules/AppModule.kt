@@ -2,7 +2,6 @@ package com.example.bankingappmod.modules
 
 import android.app.Application
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -13,7 +12,6 @@ import com.example.bankingappmod.db.AccountItemDataDao
 import com.example.bankingappmod.db.AppDatabase
 import com.example.bankingappmod.db.TransactionItemDataDao
 import com.example.bankingappmod.utils.TransactionStatus
-import com.example.bankingappmod.utils.dateFormatter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +28,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(app: Application): AppDatabase {
-        return Room.databaseBuilder(app, AppDatabase::class.java, "app_database2")
+        return Room.databaseBuilder(app, AppDatabase::class.java, "bank_database")
             .addCallback(object : RoomDatabase.Callback() {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onCreate(db: SupportSQLiteDatabase) {
@@ -47,14 +45,14 @@ object AppModule {
                             TransactionItemData(
                                 transactionPlace = "Grocery Store",
                                 transactionNumber = "T001",
-                                transactionDate = dateFormatter(),
+                                transactionDate = "25.07.2024",
                                 transactionStatus = TransactionStatus.EXECUTED,
                                 transactionAmount = 50.0f
                             ),
                             TransactionItemData(
                                 transactionPlace = "Online Shopping",
                                 transactionNumber = "T002",
-                                transactionDate = dateFormatter(),
+                                transactionDate = "25.07.2024",
                                 transactionStatus = TransactionStatus.EXECUTED,
                                 transactionAmount = 150.0f
                             )

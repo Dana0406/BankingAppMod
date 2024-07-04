@@ -19,6 +19,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,15 +34,16 @@ import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.rcViews.RecentTransactionsRecyclerView
 import com.example.bankingappmod.vm.TransactionsViewModel
 
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AllTransactionsScreen(
-    onTransactionClick: (TransactionItemData) -> Unit,
+    onTransactionClick: (Int) -> Unit,
     onBackClick: () -> Unit,
     onFilterClick: () -> Unit,
     viewModel: TransactionsViewModel = hiltViewModel()
 ) {
+    val transactions by viewModel.filteredTransactions.observeAsState(emptyList())
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -87,8 +90,7 @@ fun AllTransactionsScreen(
                 .background(Color.Black)
                 .fillMaxWidth()
         ) {
-            RecentTransactionsRecyclerView(viewModel = viewModel, onTransactionClick = onTransactionClick)
+            RecentTransactionsRecyclerView(onTransactionClick, transactions)
         }
     }
 }
-
