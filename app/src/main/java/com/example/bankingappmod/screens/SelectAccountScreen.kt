@@ -6,54 +6,56 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bankingappmod.data.AccountItemData
+import com.example.bankingappmod.items.AccountItem
 import com.example.bankingappmod.rcViews.AccountRecyclerView
+import com.example.bankingappmod.ui.theme.SelectTheAccount
 import com.example.bankingappmod.vm.AccountsViewModel
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectAccountScreen(
-    onSelAccountClick: () -> Unit,
+    onSelAccountClick: (AccountItemData) -> Unit,
     onDismiss: () -> Unit,
-    accountViewModel: AccountsViewModel = hiltViewModel(),
+    accountViewModel: AccountsViewModel = hiltViewModel()
 ) {
+    val accounts by accountViewModel.accounts.observeAsState(emptyList())
+    val selectedAccount by accountViewModel.selectedAccount.observeAsState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Black)
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 16.dp)
+            .padding(16.dp)
     ) {
         Text(
-            text = "Select the account",
+            text = "Select Account",
+            fontSize = 20.sp,
             color = Color.White,
-            fontSize = 34.sp,
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp)
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Card(
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier
-                .background(Color.Black)
-                .fillMaxWidth()
-        ) {
-            AccountRecyclerView(
-                viewModel = accountViewModel,
-                onSelectAccountClick = onSelAccountClick,
-                showForwardIcon = false
-            )
-        }
+        AccountRecyclerView(
+            accounts = accounts,
+            selectedAccount = selectedAccount,
+            onSelectAccountClick = { account ->
+                accountViewModel.selectAccount(account)
+                onSelAccountClick(account)
+            },
+            showForwardIcon = false
+        )
     }
 }

@@ -56,7 +56,7 @@ fun TransactionItem(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = transactionItem.transactionDate.toString(),
+                        text = transactionItem.transactionDate,
                         fontSize = 13.sp,
                         color = TextGrey
                     )

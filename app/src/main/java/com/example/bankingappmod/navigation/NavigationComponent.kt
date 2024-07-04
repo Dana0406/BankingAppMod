@@ -72,6 +72,7 @@ fun NavigationComponent(navController: NavHostController) {
                         FilterScreen(
                             onSubmitClick = {
                                 shouldShowFilterScreen = false
+                                navController.navigate(allTransactionsScreen)
                             }
                         )
                     }
@@ -88,7 +89,7 @@ fun NavigationComponent(navController: NavHostController) {
                                     navController.navigate(allTransactionsScreen)
                                 },
                                 onTransactionClick = { transactionId ->
-                                    navController.navigate("$transactionDetailScreen/$transactionId")
+                                    navController.navigate("transactionDetailScreen/$transactionId")
                                 },
                                 onAddClick = {
                                     navController.navigate(addTransactionScreen)
@@ -105,18 +106,20 @@ fun NavigationComponent(navController: NavHostController) {
                         composable(allTransactionsScreen) {
                             AllTransactionsScreen(
                                 onTransactionClick = { transactionId ->
-                                    navController.navigate("$transactionDetailScreen/$transactionId")
+                                    navController.navigate("transactionDetailScreen/$transactionId")
                                 },
                                 onBackClick = {
                                     navController.navigate(accountScreen)
                                 },
                                 onFilterClick = {
                                     shouldShowFilterScreen = true
-                                }
+                                },
+                                startDate = "01.01.2000",
+                                endDate = "01.01.2050"
                             )
                         }
                         composable(
-                            route = "$transactionDetailScreen/{transactionId}",
+                            route = "transactionDetailScreen/{transactionId}",
                             arguments = listOf(navArgument("transactionId") { type = NavType.IntType })
                         ) { backStackEntry ->
                             val transactionId = backStackEntry.arguments?.getInt("transactionId") ?: 0

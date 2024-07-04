@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatterBuilder
 @RequiresApi(Build.VERSION_CODES.O)
 fun dateFormatter(): String {
     val currentDate = LocalDate.now()
-    val formatter = DateTimeFormatter.ofPattern("dd.MM.yy")
+    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
     return currentDate.format(formatter)
 }
 

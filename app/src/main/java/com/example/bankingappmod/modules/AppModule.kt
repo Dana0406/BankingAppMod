@@ -40,6 +40,11 @@ object AppModule {
                             accountNumber = "1234567890",
                             cardNumber = "1111222233334444"
                         )
+                        val initialAccount2 = AccountItemData(
+                            accountName = "Main Account2",
+                            accountNumber = "111111111",
+                            cardNumber = "1111222233334444"
+                        )
 
                         val initialTransactions = listOf(
                             TransactionItemData(
@@ -57,8 +62,8 @@ object AppModule {
                                 transactionAmount = 150.0f
                             )
                         )
-
                         provideDatabase(app).accountItemDataDao().insert(initialAccount)
+                        provideDatabase(app).accountItemDataDao().insert(initialAccount2)
                         provideDatabase(app).transactionItemDataDao().insert(initialTransactions[0])
                         provideDatabase(app).transactionItemDataDao().insert(initialTransactions[1])
                     }

@@ -13,28 +13,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.data.AccountItemData
+import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.items.AccountItem
 import com.example.bankingappmod.vm.AccountsViewModel
 
 @Composable
 fun AccountRecyclerView(
-    viewModel: AccountsViewModel = hiltViewModel(),
-    onSelectAccountClick: () -> Unit,
-    showForwardIcon: Boolean = true
+    accounts: List<AccountItemData>,
+    selectedAccount: AccountItemData?,
+    onSelectAccountClick: (AccountItemData) -> Unit,
+    showForwardIcon: Boolean
 ) {
-    val accounts by viewModel.accounts.observeAsState(initial = emptyList())
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Black),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
+    LazyColumn {
         items(accounts) { account ->
             AccountItem(
-                onSelectAccountClick,
-                account,
-                showForwardIcon
+                accountItem = account,
+                onSelectAccountClick = { onSelectAccountClick(account) },
+                showForwardIcon = showForwardIcon,
+                isSelected = selectedAccount == account
             )
         }
     }

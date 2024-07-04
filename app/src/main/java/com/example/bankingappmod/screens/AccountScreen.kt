@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.R
 import com.example.bankingappmod.data.TransactionItemData
+import com.example.bankingappmod.items.AccountItem
 import com.example.bankingappmod.rcViews.AccountRecyclerView
 import com.example.bankingappmod.rcViews.RecentTransactionsRecyclerView
 import com.example.bankingappmod.ui.theme.Account
@@ -54,6 +55,7 @@ fun AccountScreen(
     accountViewModel: AccountsViewModel = hiltViewModel()
 ) {
     val transactions by transViewModel.transactions.observeAsState(emptyList())
+    val selectedAccount by accountViewModel.selectedAccount.observeAsState()
 
     Column(
         modifier = Modifier
@@ -68,12 +70,14 @@ fun AccountScreen(
             modifier = Modifier.padding(top = 12.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        AccountRecyclerView(
-            viewModel = accountViewModel,
-            onSelectAccountClick = onSelectAccountClick,
-            showForwardIcon = true
-        )
-        Spacer(modifier = Modifier.height(23.dp))
+        selectedAccount?.let { account ->
+            AccountItem(
+                accountItem = account,
+                onSelectAccountClick = onSelectAccountClick,
+                showForwardIcon = true,
+                isSelected = true
+            )
+        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -123,4 +127,3 @@ fun AccountScreen(
         }
     }
 }
-
