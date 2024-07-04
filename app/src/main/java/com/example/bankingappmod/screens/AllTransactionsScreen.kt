@@ -34,7 +34,6 @@ import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.rcViews.RecentTransactionsRecyclerView
 import com.example.bankingappmod.vm.TransactionsViewModel
 
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AllTransactionsScreen(
@@ -43,7 +42,7 @@ fun AllTransactionsScreen(
     onFilterClick: () -> Unit,
     viewModel: TransactionsViewModel = hiltViewModel()
 ) {
-    val transactions by viewModel.transactions.observeAsState(emptyList())
+    val transactions by viewModel.filteredTransactions.observeAsState(emptyList())
 
     Column(
         modifier = Modifier

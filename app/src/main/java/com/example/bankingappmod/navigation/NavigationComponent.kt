@@ -17,13 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.bankingappmod.data.TransactionItemData
 import com.example.bankingappmod.screens.AccountScreen
 import com.example.bankingappmod.screens.AddTransactionScreen
 import com.example.bankingappmod.screens.AllTransactionsScreen
@@ -34,9 +32,6 @@ import com.example.bankingappmod.ui.theme.accountScreen
 import com.example.bankingappmod.ui.theme.addTransactionScreen
 import com.example.bankingappmod.ui.theme.allTransactionsScreen
 import com.example.bankingappmod.ui.theme.transactionDetailScreen
-import com.example.bankingappmod.utils.TransactionStatus
-import com.example.bankingappmod.utils.dateFormatter
-import com.example.bankingappmod.vm.TransactionsViewModel
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)

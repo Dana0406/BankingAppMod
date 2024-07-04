@@ -1,5 +1,7 @@
 package com.example.bankingappmod.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,14 +23,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankingappmod.customFields.CalendarDialog
 import com.example.bankingappmod.customFields.CustomButton
 import com.example.bankingappmod.customFields.EditableField
 import com.example.bankingappmod.customFields.RegularText
+import com.example.bankingappmod.ui.theme.EndDate
+import com.example.bankingappmod.ui.theme.FilterByDate
+import com.example.bankingappmod.ui.theme.StartDate
+import com.example.bankingappmod.ui.theme.Submit
+import com.example.bankingappmod.vm.TransactionsViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FilterScreen(
-    onSubmitClick: () -> Unit
+    onSubmitClick: () -> Unit,
+    viewModel: TransactionsViewModel = hiltViewModel()
 ) {
     var showCalendar by remember { mutableStateOf(false) }
     var selectedStartDate by remember { mutableStateOf("") }
@@ -62,14 +72,14 @@ fun FilterScreen(
                     .wrapContentSize()
             ) {
                 Text(
-                    text = "Filter by date",
+                    text = FilterByDate,
                     color = Color.White,
                     fontSize = 34.sp,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    RegularText(text = "Start Date")
+                    RegularText(text = StartDate)
                     Spacer(modifier = Modifier.height(8.dp))
                     EditableField(
                         value = selectedStartDate,
@@ -81,7 +91,7 @@ fun FilterScreen(
                         }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    RegularText(text = "End Date")
+                    RegularText(text = EndDate)
                     Spacer(modifier = Modifier.height(8.dp))
                     EditableField(
                         value = selectedEndDate,
@@ -94,8 +104,11 @@ fun FilterScreen(
                     )
                     Spacer(modifier = Modifier.height(24.dp))
                     CustomButton(
-                        text = "Submit",
-                        onOkayClick =  onSubmitClick,
+                        text = Submit,
+                        onOkayClick = {
+                            viewModel.filterAndSortTransactions(selectedStartDate, selectedEndDate)
+                            onSubmitClick()
+                        },
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }

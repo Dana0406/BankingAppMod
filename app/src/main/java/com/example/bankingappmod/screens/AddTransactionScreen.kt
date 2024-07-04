@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,7 +31,6 @@ import com.example.bankingappmod.ui.theme.TrNumber
 import com.example.bankingappmod.ui.theme.TrStatus
 import com.example.bankingappmod.ui.theme.Transaction
 import com.example.bankingappmod.utils.TransactionStatus
-import com.example.bankingappmod.utils.dateFormatter
 import com.example.bankingappmod.vm.TransactionsViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -101,7 +99,7 @@ fun AddTransactionScreen(
                     id = 0,
                     transactionPlace = transactionPlace,
                     transactionNumber = transactionNumber,
-                    transactionDate = dateFormatter(),
+                    transactionDate = "25.07.2024",
                     transactionStatus = TransactionStatus.valueOf(transactionStatus),
                     transactionAmount = transactionAmount.toFloat()
                 )
