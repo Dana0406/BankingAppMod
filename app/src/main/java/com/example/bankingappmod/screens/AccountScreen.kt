@@ -64,7 +64,7 @@ fun AccountScreen(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = "Account",
+            text = Account,
             fontSize = 28.sp,
             color = Color.White,
             modifier = Modifier.padding(top = 12.dp)
@@ -78,19 +78,18 @@ fun AccountScreen(
                 isSelected = true
             )
         }
-        Spacer(modifier = Modifier.height(23.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Recent Transactions",
+                text = RecentTransactions,
                 fontSize = 28.sp,
                 color = Color.White
             )
             Text(
-                text = "View All",
+                text = ViewAll,
                 fontSize = 13.sp,
                 color = Blue,
                 modifier = Modifier
@@ -121,7 +120,7 @@ fun AccountScreen(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.plus),
-                    contentDescription = "Add",
+                    contentDescription = Add,
                     tint = Color.White
                 )
             }

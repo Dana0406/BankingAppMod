@@ -75,8 +75,8 @@ fun NavigationComponent(navController: NavHostController) {
                             }
                         )
                     }
-                    NavHost(navController = navController, startDestination = "accountScreen") {
-                        composable("accountScreen") {
+                    NavHost(navController = navController, startDestination = accountScreen) {
+                        composable(accountScreen) {
                             AccountScreen(
                                 onSelectAccountClick = {
                                     shouldShowSelectAccountSheet = true
@@ -85,30 +85,30 @@ fun NavigationComponent(navController: NavHostController) {
                                     }
                                 },
                                 onViewAllClick = {
-                                    navController.navigate("allTransactionsScreen")
+                                    navController.navigate(allTransactionsScreen)
                                 },
                                 onTransactionClick = { transactionId ->
                                     navController.navigate("transactionDetailScreen/$transactionId")
                                 },
                                 onAddClick = {
-                                    navController.navigate("addTransactionScreen")
+                                    navController.navigate(addTransactionScreen)
                                 }
                             )
                         }
-                        composable("addTransactionScreen") {
+                        composable(addTransactionScreen) {
                             AddTransactionScreen(
                                 onOkayClick = {
-                                    navController.navigate("accountScreen")
+                                    navController.navigate(accountScreen)
                                 }
                             )
                         }
-                        composable("allTransactionsScreen") {
+                        composable(allTransactionsScreen) {
                             AllTransactionsScreen(
                                 onTransactionClick = { transactionId ->
                                     navController.navigate("transactionDetailScreen/$transactionId")
                                 },
                                 onBackClick = {
-                                    navController.navigate("accountScreen")
+                                    navController.navigate(accountScreen)
                                 },
                                 onFilterClick = {
                                     shouldShowFilterScreen = true
@@ -123,7 +123,7 @@ fun NavigationComponent(navController: NavHostController) {
                             DetailsTransactionScreen(
                                 transactionId = transactionId,
                                 onOkayClick = {
-                                    navController.navigate("accountScreen")
+                                    navController.navigate(accountScreen)
                                 }
                             )
                         }

@@ -27,22 +27,15 @@ class AccountsViewModel @Inject constructor(
 
     private fun loadAccounts() {
         viewModelScope.launch {
-            val loadedAccounts = accountDao.getAllAccountItemData()
-            _accounts.value = loadedAccounts
-            if (loadedAccounts.isNotEmpty()) {
-                _selectedAccount.value = loadedAccounts.first()
+            val accountsList = accountDao.getAllAccountItemData()
+            _accounts.value = accountsList
+            if (_selectedAccount.value == null && accountsList.isNotEmpty()) {
+                _selectedAccount.value = accountsList.first()
             }
         }
     }
 
     fun selectAccount(account: AccountItemData) {
         _selectedAccount.value = account
-    }
-
-    fun addAccount(account: AccountItemData) {
-        viewModelScope.launch {
-            accountDao.insert(account)
-            loadAccounts()
-        }
     }
 }

@@ -20,24 +20,18 @@ import com.example.bankingappmod.vm.AccountsViewModel
 @Composable
 fun AccountRecyclerView(
     accounts: List<AccountItemData>,
+    selectedAccount: AccountItemData?,
     onSelectAccountClick: (AccountItemData) -> Unit,
-    showForwardIcon: Boolean = true,
-    selectedAccount: AccountItemData? = null
+    showForwardIcon: Boolean
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Black),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
+    LazyColumn {
         items(accounts) { account ->
             AccountItem(
-                onSelectAccountClick = { onSelectAccountClick(account) },
                 accountItem = account,
+                onSelectAccountClick = { onSelectAccountClick(account) },
                 showForwardIcon = showForwardIcon,
-                isSelected = account == selectedAccount
+                isSelected = selectedAccount == account
             )
         }
     }
 }
-

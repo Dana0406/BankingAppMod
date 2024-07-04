@@ -39,7 +39,7 @@ fun AccountItem(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .fillMaxWidth()
-
+            .padding(bottom = 16.dp)
     ) {
         Row(
             modifier = Modifier
